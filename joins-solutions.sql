@@ -17,7 +17,7 @@ JOIN warehouse
 ON warehouse_product.warehouse_id=warehouse.id
 WHERE products.description = 'cheetos';
 
--- Which warehouses have diet pepsi?
+-- 4. Which warehouses have diet pepsi?
 SELECT *
 FROM products
 JOIN warehouse_product
@@ -26,13 +26,24 @@ JOIN warehouse
 ON warehouse_product.warehouse_id=warehouse.id
 WHERE products.description = 'diet coke';
 
--- Get the number of orders for each customer. NOTE: It is OK if those without orders are not included in results.
+-- 5. Get the number of orders for each customer. NOTE: It is OK if those without orders are not included in results.
 SELECT first_name, count(order_date)
 FROM orders
 FULL OUTER JOIN addresses ON orders.address_id=addresses.id
 FULL OUTER JOIN customers ON addresses.customer_id=customers.id
 GROUP BY first_name;
--- How many customers do we have?
+-- 6. How many customers do we have?
+SELECT count(*)
+FROM customers ;
 
 -- How many products do we carry?
+SELECT count(*)
+FROM products ;
+
+
 -- What is the total available on-hand quantity of diet pepsi?
+SELECT sum(on_hand)
+FROM warehouse_product
+JOIN products ON warehouse_product.product_id = products.id
+WHERE products.description = 'diet pepsi'
+GROUP BY products.description;
